@@ -22,7 +22,7 @@ A feature-rich Codeforces plugin for Neovim. Solve competitive programming probl
 
 ```lua
 {
-  "YOUR_GITHUB_USERNAME/codeforces.nvim",
+  "https://github.com/didenamine/LazyVim_CodeforcesParser",
   dependencies = { "nvim-lua/plenary.nvim" },
   cmd = { "CF" },
   config = function()

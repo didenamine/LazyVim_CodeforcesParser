@@ -1,0 +1,11 @@
+{
+  "name": "codeforces.nvim",
+  "version": "1.0.0",
+  "description": "A Codeforces plugin for Neovim with Cloudflare bypass, auto-test runner, and multi-language support.",
+  "main": "fetch_page.js",
+  "dependencies": {
+    "playwright": "^1.40.0"
+  },
+  "author": "",
+  "license": "MIT"
+}
