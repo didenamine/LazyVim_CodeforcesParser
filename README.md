@@ -34,10 +34,9 @@ A feature-rich Codeforces plugin for Neovim. Solve competitive programming probl
   end,
   build = function()
     -- Automatically install node dependencies
-    local dir = vim.fn.stdpath("config") .. "/lazy/codeforces.nvim/lua/codeforces"
+    local dir = vim.fn.stdpath("data") .. "/lazy/LazyVim_CodeforcesParser"
     if vim.fn.isdirectory(dir) == 1 then
-      vim.fn.system({"npm", "install", "--prefix", dir})
-      vim.fn.system({"npx", "playwright", "install", "chromium", "--prefix", dir})
+      vim.fn.system("cd " .. vim.fn.shellescape(dir) .. " && npm install && npx playwright install chromium")
     end
   end,
 }
@@ -45,10 +44,9 @@ A feature-rich Codeforces plugin for Neovim. Solve competitive programming probl
 
 ## Setup
 
-After installing, ensure you have the required Node.js browsers. You can run this in your terminal:
+After installing, ensure you have the required Node.js browsers. If you need to install them manually, run the commands from the plugin root inside your Neovim data directory. The exact path depends on your system and lazy.nvim config.
 
 ```bash
-cd ~/.local/share/nvim/lazy/codeforces.nvim/lua/codeforces
 npm install
 npx playwright install chromium
 ```
@@ -65,8 +63,3 @@ npx playwright install chromium
 Inside a solution buffer, you can use:
 - `<leader>ct`: Run all tests (shortcut for `:CF runtests`).
 - `<leader>co`: Focus the problem statement pane.
-
-## License
-
-MIT
-# LazyVim_CodeforcesParser
