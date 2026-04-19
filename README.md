@@ -1,4 +1,4 @@
-# codeforces.nvim
+# codeforcesparser.nvim
 
 A feature-rich Codeforces plugin for Neovim. Solve competitive programming problems without leaving your favorite editor.
 
@@ -20,36 +20,52 @@ A feature-rich Codeforces plugin for Neovim. Solve competitive programming probl
 
 ### Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
+If you use LazyVim, put this in your `lua/plugins/example.lua` file:
+
 ```lua
-{
-  "didenamine/LazyVim_CodeforcesParser",
-  dependencies = { "nvim-lua/plenary.nvim" },
-  cmd = { "CF" },
-  config = function()
-    require("codeforces").setup({
-      -- Default settings
+return {
+  {
+    "didenamine/codeforcesparser.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = { "CF" },
+
+    -- The repo is named codeforcesparser.nvim, but the Lua module is "codeforces".
+    main = "codeforces",
+    opts = {
       language = "cpp",
-      timeout  = 5000,
-    })
-  end,
-  build = function()
-    -- Automatically install node dependencies
-    local dir = vim.fn.stdpath("data") .. "/lazy/LazyVim_CodeforcesParser"
-    if vim.fn.isdirectory(dir) == 1 then
-      vim.fn.system("cd " .. vim.fn.shellescape(dir) .. " && npm install && npx playwright install chromium")
-    end
-  end,
+      timeout = 5000,
+    },
+
+    -- Runs from the plugin directory.
+    build = "npm install && npx playwright install chromium",
+  },
 }
 ```
 
 ## Setup
 
-After installing, ensure you have the required Node.js browsers. If you need to install them manually, run the commands from the plugin root inside your Neovim data directory. The exact path depends on your system and lazy.nvim config.
+After lazy.nvim installs the plugin, make sure Playwright's Chromium browser is available.
+
+The easiest (path-independent) way is:
+
+```vim
+:Lazy build codeforcesparser.nvim
+```
+
+If you prefer to run it manually, run these commands from the plugin root:
 
 ```bash
 npm install
 npx playwright install chromium
 ```
+
+To find the actual checkout path on any system/config:
+
+```vim
+:lua print(require("lazy.core.config").options.root)
+```
+
+Then use `<printed_root>/codeforcesparser.nvim`.
 
 ## Usage
 
