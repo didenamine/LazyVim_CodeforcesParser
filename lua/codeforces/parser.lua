@@ -26,7 +26,6 @@ local function html_to_text(s)
 end
 
 local function extract_class(html, class_name)
-  -- 1. Find the opening tag that contains the class
   local pattern = '<([a-zA-Z0-9]+)[^>]+class="[^"]*' .. class_name .. '[^"]*"[^>]*>'
   local s, e, tag_name = html:find(pattern)
   if not s then return nil end
@@ -35,7 +34,6 @@ local function extract_class(html, class_name)
   local open_tag  = "<" .. tag_name
   local close_tag = "</" .. tag_name .. ">"
 
-  -- 2. Count nested tags of the same type to find the matching closer
   local depth = 1
   local i = 1
   local len = #rest
@@ -130,7 +128,6 @@ local function parse_tests(html)
       :gsub("<br%s*/?>", "\n")
       :gsub("<[^>]+>", "")
     text = decode_entities(text)
-    -- remove leading/trailing whitespace but keep internal newlines
     text = text:match("^%s*(.-)%s*$") or text
     table.insert(pres, text)
   end
@@ -164,7 +161,6 @@ function M.parse(html, contest_id, index)
     fetched_at   = os.time(),
   }
 
-  -- fix: store both limits correctly
   local tl, ml = parse_limits(html)
   problem.time_limit   = tl
   problem.memory_limit = ml

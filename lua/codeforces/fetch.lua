@@ -4,7 +4,6 @@ local M = {}
 local script_dir = debug.getinfo(1, "S").source:sub(2):match("(.*)/")
 local fetch_script = script_dir .. "/fetch_page.js"
 
--- Resolve the node binary
 local function node_bin()
   local sys = vim.fn.exepath("node")
   if sys and sys ~= "" then return sys end
@@ -26,7 +25,6 @@ local function canonical_url(contest_id, index)
 end
 
 --- Fetch the page HTML using the local Playwright script.
---- Calls callback(err, html) on completion.
 local function fetch_via_playwright(url, callback)
   local stderr_chunks = {}
 
@@ -68,11 +66,12 @@ function M.fetch_and_open(url)
     return
   end
 
-  local langs = { "cpp", "python" }
+  local langs = { "cpp", "c", "python", "java" }
+  local lang_names = { cpp = "C++", c = "C", python = "Python", java = "Java" }
   vim.ui.select(langs, {
     prompt = "Choose language for this problem:",
     format_item = function(item)
-      return item == "cpp" and "C++" or "Python"
+      return lang_names[item] or item
     end,
   }, function(lang)
     if not lang then return end
